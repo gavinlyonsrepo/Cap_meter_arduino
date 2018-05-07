@@ -12,11 +12,11 @@ Libraries
 The .ino file( which contains the C++ source code) calls from a number of libraries.
 
 All are standard libraries which can be found on Arduino website site or Adafruit website
-// Library
-#include <Wire.h>   //I2C 
-#include <Adafruit_GFX.h> // OLED 
-#include <Adafruit_SSD1306.h> // OLED
-#include <Button.h> // push button https://www.arduinolibraries.info/authors/madleech https://github.com/madleech/Button
+
+* <Wire.h>   //I2C 
+* <Adafruit_GFX.h> // OLED 
+* <Adafruit_SSD1306.h> // OLED
+* <Button.h> // push button https://www.arduinolibraries.info/authors/madleech https://github.com/madleech/Button
 
 
 Parts List
@@ -43,12 +43,12 @@ Each Arduino capacitance meter relies on a property of resistor capacitor (RC) c
 The time constant of an RC circuit is defined as the time it takes for the voltage across the capacitor 
 to reach 63.2% of its voltage when fully charged:
 
-![ScreenShot cap time constant](https://github.com/gavinlyonsrepo/Cap_meter_ardunio/blob/master/screenshot/ctc.jpg)
+![ScreenShot cap time constant](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/screenshot/ctc.jpg)
 
 Larger capacitors take longer to charge, and therefore will create larger time constants. 
 The capacitance in an RC circuit is related to the time constant by the equation:
 
-![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_ardunio/blob/master/screenshot/eq.jpg)
+![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/screenshot/eq.jpg)
 
 The capacitance meter has an RC circuit with known resistor values and an unknown capacitor value. 
 The Arduino will measure the voltage at the capacitor and record the time it takes to reach 63.2% of it’s voltage when fully charged (the time constant). 
@@ -63,7 +63,7 @@ One for discharge one for charge
 Insert a capacitor in range into terminal press button and view result on OLED or serial monitor
 The result gives two values value of cap in uF and time constant to test in mS.
 
-![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_ardunio/blob/master/screenshot/sch.jpg)
+![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/screenshot/sch.jpg)
 
 Test2
 ###
@@ -89,16 +89,16 @@ The test displays 3 values
 * Time constant for test in mS
 * ADC measurement from 0 to 1023 where 1023 is 5V
 
-![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_ardunio/blob/master/screenshot/test2sch.jpg)
+![ScreenShot cap eq constant](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/screenshot/test2sch.jpg)
 
 
 See Also
 -----------------------------------
 
-https://www.arduino.cc/en/Tutorial/CapacitanceMeter
-http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
-http://electronoobs.com/eng_arduino_tut10_1.php
-http://wordpress.codewrite.co.uk/pic/2014/01/21/cap-meter-with-arduino-uno/
+* https://www.arduino.cc/en/Tutorial/CapacitanceMeter
+* http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
+* http://electronoobs.com/eng_arduino_tut10_1.php
+* http://wordpress.codewrite.co.uk/pic/2014/01/21/cap-meter-with-arduino-uno/
 
 Copyright
 -------------------------------
