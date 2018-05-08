@@ -45,7 +45,7 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
 #endif
 
 // Pins and vars for test 1uf to 4uF
-#define analogPin      0
+#define analogPin      6
 #define chargePin      12
 #define dischargePin   11
 #define resistorValue  10000.0F
@@ -60,8 +60,8 @@ const float R_PULLUP = 34.8;
 const int MAX_ADC_VALUE = 1023;
 
 // Buttons and test count
-Button btn_test(2);
-Button btn_test_two(3);
+Button btn_test(3);
+Button btn_test_two(8);
 int test_count = 0;
 
 void setup() {
@@ -113,7 +113,7 @@ void Test_one()
   float nF;
   digitalWrite(chargePin, HIGH);
   startTime = millis();
-  // 648 is 63.2% of 1024 adc 10 bit = 1024 stpo when get to 648
+  // 648 is 63.2% of 1024 adc 10 bit = 1024 stop when get to 648
   while (analogRead(analogPin) < 648) {
   }
   elapsedTime = millis() - startTime;

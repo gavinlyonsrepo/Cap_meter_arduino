@@ -1,4 +1,4 @@
-Overview
+﻿Overview
 --------------------
 * Name : Cap_meter_arduino
 * Title : Capacitance meter for Arduino
@@ -85,7 +85,7 @@ The user will have to change IN_STRAY_CAP_TO_GND for their system.
 Test a known cap get Adc value and then pop these values into equation above
 and put the C1 value into IN_STRAY_CAP_TO_GND  varible in code.
 The test displays 3 values 
-* Capacitnace in Farads
+* Capacitance in Farads
 * Time constant for test in mS
 * ADC measurement from 0 to 1023 where 1023 is 5V
 
