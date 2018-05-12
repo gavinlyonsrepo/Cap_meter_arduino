@@ -68,8 +68,8 @@ void setup() {
   // Setup code here, to run once:
 
   // Setup pins for button enable internal pull-up resistors
-  digitalWrite(2, HIGH);
   digitalWrite(3, HIGH);
+  digitalWrite(8, HIGH);
   btn_test.begin();
   btn_test_two.begin();
 
