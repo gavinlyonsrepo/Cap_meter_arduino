@@ -23,7 +23,6 @@ All are standard libraries which can be found on Arduino website site or Adafrui
 Parts List
 ------------------------------
 See fritzing diagram in "doc" for assembly instruction and schematic. 
-You will need [fritzing](https://en.wikipedia.org/wiki/Fritzing) software to open this.
 
 You will need following parts
 
@@ -102,6 +101,7 @@ The test displays 3 values
 See Also
 -----------------------------------
 
+* [fritzing software ](https://en.wikipedia.org/wiki/Fritzing) 
 * https://www.arduino.cc/en/Tutorial/CapacitanceMeter
 * http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
 * http://electronoobs.com/eng_arduino_tut10_1.php
