@@ -1,15 +1,20 @@
+//******************* HEADER ***********************************
 /*
- * * Name : Cap_meter_ardunio
+  Name : Cap_meter_ardunio
   Title : Capacitance meter for Ardunio
   Description : Capacitance meter for Ardunio, two tests , range 10pf to 4F , Push Button input , OLED and serial monitor output.
   Author: Gavin Lyons
   URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
 */
-// Library
-#include <Wire.h>   //I2C
-#include <Adafruit_GFX.h> // OLED
-#include <Adafruit_SSD1306.h> // OLED
-#include <Button.h> // push buttons
+
+
+//*************************** LIBRARIES ********************
+#include <Wire.h>   //I2C 1.0.0
+#include <Adafruit_GFX.h> // OLED 1.2.2
+#include <Adafruit_SSD1306.h> // OLED 1.1.2
+#include <Button.h> // push buttons 1.0.0
+
+//*************************** GLOBALS ********************
 
 // LCD data
 #define OLED_RESET 4
@@ -64,8 +69,8 @@ Button btn_test(3);
 Button btn_test_two(8);
 int test_count = 0;
 
+//*************************** SETUP ************************
 void setup() {
-  // Setup code here, to run once:
 
   // Setup pins for button enable internal pull-up resistors
   digitalWrite(3, HIGH);
@@ -82,26 +87,26 @@ void setup() {
   // Setup serial
   Serial.begin(9600);
 
-  // Initialize with the I2C addr 0x3C (for the 128x32 OLED)
   Display_init();
-  delay(2000);
+  delay(500);
 }
 
-// Main code loop here, to run repeatedly:
+//******************* MAIN LOOP *****************
 void loop() {
-  // *** TEST 1 ***
+  // *** TEST 1 Range 1 uF to 4F. ***
   if (btn_test.pressed()) {
     TestButton(1);
     Test_one();
   }
-  // *** TEST 2 ***
+  // *** TEST 2  Range 18 pF to 470 uF. ***
   if (btn_test_two.pressed()) {
     TestButton(2);
     Test_two();
   }
 }
-// *** End of Main ***
 
+
+// ********************* FUNCTIONS *************************
 
 //Function to handle test1
 void Test_one()
@@ -273,5 +278,31 @@ void Display_init()
   display.setCursor(0, 15);
   display.print("G. Lyons");
   display.display();
+  delay(1500); 
+  display.clearDisplay();
+  
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.print("Test 1 right");
+  display.setCursor(0, 15);
+  display.print("Range 1uF - 4F");
+  display.display();
+  delay(1500);
+  display.clearDisplay();
+  
+  display.setCursor(0, 0);
+  display.print("Test 2 left");
+  display.setCursor(0, 15);
+  display.print("Range 18pF - 470uF");
+  display.display();
+  delay(1500);
+  display.clearDisplay();
+  
+  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.print("Ready");
+  display.display();
+  
 }
-// *** End of FILE ***
+//******************* EOF *****************
+

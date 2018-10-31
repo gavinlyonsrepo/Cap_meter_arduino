@@ -4,7 +4,8 @@
 * Title : Capacitance meter for Arduino
 * Description : Capacitance meter for Arduino, two tests , range 18pf to 4F , Push Button input , OLED and serial monitor output.
 * Author: Gavin Lyons
-
+* Arduino version: 1.8.5
+* URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
 
 Libraries
 ------------------------
@@ -13,10 +14,10 @@ The .ino file( which contains the C++ source code) calls from a number of librar
 
 All are standard libraries which can be found on Arduino website site or Adafruit website
 
-* <Wire.h>   //I2C 
-* <Adafruit_GFX.h> // OLED 
-* <Adafruit_SSD1306.h> // OLED
-* <Button.h> // push button https://www.arduinolibraries.info/authors/madleech https://github.com/madleech/Button
+* <Wire.h>   v 1.0.0 //I2C 
+* <Adafruit_GFX.h> v 1.2.2 // OLED 
+* <Adafruit_SSD1306.h> v 1.1.2 // OLED
+* <Button.h> v 1.0.0 // pb https://www.arduinolibraries.info/authors/madleech or https://github.com/madleech/Button
 
 
 Parts List
@@ -28,17 +29,23 @@ You will need following parts
 
 > Two pushbuttons
 >
-> Two resistors 10kohm and 220ohm 
+> Two resistors 10 kohm and 220 ohm 
 >
-> Arduino microcontroller 
+> Arduino microcontroller (tested on a NANO and UNO)
 >
-> I2C 0.91" inch 128x32 OLED Display Module 
-
+> I2C 0.91" inch 128x32 OLED Display Module (optional can also read data via serial monitor on PC)
+>
+> Some sort of terminals or socket to hold capacitors during test
+>
 
 Features
 -----------------------------------------------
 The meter measures capacitance it outputs to an OLED and serial monitor.
 Two push buttons start the two tests.
+
+1. Test 1 Range  1 uF to 4F.
+2. Test 2 Range 18 pF to 470 uF.
+
 Each Arduino capacitance meter relies on a property of resistor capacitor (RC) circuits- the time constant. 
 The time constant of an RC circuit is defined as the time it takes for the voltage across the capacitor 
 to reach 63.2% of its voltage when fully charged:
