@@ -1,10 +1,9 @@
 ﻿Overview
 --------------------
 * Name : Cap_meter_arduino
-* Title : Capacitance meter for Arduino
+* Title : Capacitance meter Arduino based microcontroller.
 * Description : Capacitance meter for Arduino, two tests , range 18pf to 4F , Push Button input , OLED and serial monitor output.
 * Author: Gavin Lyons
-* Arduino version: 1.8.5
 * URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
 
 Libraries
@@ -27,7 +26,7 @@ Arduino 1.8.5
 
 Parts List
 ------------------------------
-eagle schematic diagram and image  in "docs". 
+Eagle schematic diagram and image in "docs". 
 
 You will need following parts
 
@@ -86,15 +85,15 @@ The internal analog pin capacitor to gnd (C1) varies between 20 and 30pF. unknow
 The positive pin is set to 5V, the negative to 0V.
 VA2 = (VA3*Cu)/(C1 + Cu).
 
-The value of C1 for any given arduino board wil have to be calibarted using a known cap for Cu
+The value of C1 for any given Arduino board will have to be calibrated using a known cap for Cu
 for full accuracy I set it at 24.48pF in code(IN_STRAY_CAP_TO_GND) Found using equation.
 C1 = Cu *(VA3-VA2) / VA3, Where  Va2 is ADC value reported by code and VA3 is 5v or 1023.
 so for a known capacitor of 103pF giving a ADC value of 801
 so C1 = 102pf * (1023-801)/ 1023 = 28.48pF.
 The user will have to change IN_STRAY_CAP_TO_GND for their system.
 
-Test a known cap get Adc value and then pop these values into equation above
-and put the C1 value into IN_STRAY_CAP_TO_GND  varible in code.
+Test a known cap get ADC value and then pop these values into equation above
+and put the C1 value into IN_STRAY_CAP_TO_GND  variable in code.
 The test displays 3 values 
 * Capacitance in Farads
 * Time constant for test in mS
