@@ -19,16 +19,21 @@ All are standard libraries which can be found on Arduino website site or Adafrui
 * <Adafruit_SSD1306.h> v 1.1.2 // OLED
 * <Button.h> v 1.0.0 // pb https://www.arduinolibraries.info/authors/madleech or https://github.com/madleech/Button
 
+Software used
+-----------------------------
+Eagle 9.1.3
+
+Arduino 1.8.5
 
 Parts List
 ------------------------------
-See fritzing diagram in "doc" for assembly instruction and schematic. 
+eagle schematic diagram and image  in "docs". 
 
 You will need following parts
 
 > Two pushbuttons
 >
-> Two resistors 10 kohm and 220 ohm 
+> Two resistors 10Kohm and 220ohm 
 >
 > Arduino microcontroller (tested on a NANO and UNO)
 >
@@ -98,10 +103,14 @@ The test displays 3 values
 ![ScreenShot cap sch 2](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test2sch.jpg)
 
 
+Project Schematic 
+----------------------------
+
+![ScreenShot cap sch 3](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/docs/eagle/cap_meter.png)
+
 See Also
 -----------------------------------
-
-* [fritzing software ](https://en.wikipedia.org/wiki/Fritzing) 
+ 
 * https://www.arduino.cc/en/Tutorial/CapacitanceMeter
 * http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
 * http://electronoobs.com/eng_arduino_tut10_1.php
