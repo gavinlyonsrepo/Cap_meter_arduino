@@ -2,7 +2,8 @@
 /*
   Name : Cap_meter_ardunio
   Title : Capacitance meter for Ardunio
-  Description : Capacitance meter for Ardunio, two tests , range 10pf to 4F , Push Button input , OLED and serial monitor output.
+  Description : Capacitance meter for Ardunio, three tests , range 10pf to 4F , 
+  Push Button input , OLED and serial monitor output.
   Author: Gavin Lyons
   URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
 */
@@ -49,7 +50,7 @@ static const unsigned char PROGMEM logo16_glcd_bmp[] =
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
-// Pins and vars for test 1uf to 4uF
+// Pins and vars for test 1 
 #define analogPin      6
 #define chargePin      12
 #define dischargePin   11
@@ -64,9 +65,31 @@ const float IN_CAP_TO_GND  = IN_STRAY_CAP_TO_GND;
 const float R_PULLUP = 34.8;
 const int MAX_ADC_VALUE = 1023;
 
+
+//Pins and vars for test 3
+const byte pulsePin = 2;
+const unsigned long resistance = 10000;
+volatile boolean triggered;
+volatile boolean active;
+volatile unsigned long startTime;
+volatile unsigned long duration;
+
+//Interupt service rountine
+ISR (ANALOG_COMP_vect)
+  {
+  unsigned long now = micros ();
+  if (active)
+    {
+    duration = now - startTime;
+    triggered = true;
+    digitalWrite (pulsePin, LOW); 
+    }
+  }
+  
 // Buttons and test count
 Button btn_test(3);
 Button btn_test_two(8);
+Button btn_test_three(10);
 int test_count = 0;
 
 //*************************** SETUP ************************
@@ -75,19 +98,29 @@ void setup() {
   // Setup pins for button enable internal pull-up resistors
   digitalWrite(3, HIGH);
   digitalWrite(8, HIGH);
+   digitalWrite(10, HIGH);
   btn_test.begin();
   btn_test_two.begin();
+  btn_test_three.begin();
 
-  // Setup pins for testing
+  // Setup pins for testing 1 and 2
   pinMode(chargePin, OUTPUT);
   pinMode(OUT_PIN, OUTPUT);
   pinMode(IN_PIN, OUTPUT);
   digitalWrite(chargePin, LOW);
-
+  //test3
+  pinMode(pulsePin, OUTPUT);
+  digitalWrite(pulsePin, LOW);
+  ADCSRB = 0;
+  ACSR =  _BV (ACI)
+          | _BV (ACIE)
+          | _BV (ACIS0) | _BV (ACIS1);
+          
   // Setup serial
   Serial.begin(9600);
-
+  //display intial OLED screen
   Display_init();
+  Serial.println("------------- CAP Meter Comms UP ------------");
   delay(500);
 }
 
@@ -102,6 +135,11 @@ void loop() {
   if (btn_test_two.pressed()) {
     TestButton(2);
     Test_two();
+  }
+   // *** Test 3 Range 0.0047 uF to 180 uF. ***
+  if (btn_test_three.pressed()) {
+    TestButton(3);
+    Test_three();
   }
 }
 
@@ -239,6 +277,38 @@ void Test_two()
   display.display();
 }
 
+//Function to carry out Test3
+void Test_three(void)
+  
+  {
+  boolean exitloop = false;
+  while(exitloop != true)
+  {
+    if (!active)
+      {
+      active = true;
+      triggered = false;
+      digitalWrite (pulsePin, HIGH); 
+      startTime = micros ();  
+      }
+  
+    if (active && triggered)
+      {
+      active = false;
+      Serial.print ("Capacitance = ");
+      Serial.print (duration * 1000 / resistance);
+      Serial.println (" nF");
+      triggered = false;
+      //OLED
+      display.print((duration * 1000 / resistance));
+      display.println(" nF");
+      display.display();
+      delay (3000);
+      exitloop = true; //exit when test finished. 
+      }
+  }
+}
+
 // Function to handle button press start display to OLED and serial Mon
 void TestButton(int which_button)
 {
@@ -247,6 +317,7 @@ void TestButton(int which_button)
   Serial.println(test_count);
   Serial.print("Buttonpressed: ");
   Serial.println(which_button);
+  Serial.println ("Testing");
   display.clearDisplay();
   display.setCursor(7, 10);
   display.setTextSize(2);
@@ -255,7 +326,7 @@ void TestButton(int which_button)
   display.display();
 }
 
-//Function to Display elasped time to OLED and Serial Monitor
+//Function to Display elasped time to OLED and Serial Monitor called from test1 function
 void Display_time(unsigned long elaspedTime)
 {
   Serial.print(elaspedTime);
@@ -271,6 +342,7 @@ void Display_init()
 {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.clearDisplay();
+  
   display.setCursor(0, 0);
   display.setTextSize(2);
   display.setTextColor(WHITE);
@@ -282,6 +354,7 @@ void Display_init()
   display.clearDisplay();
   
   display.setTextSize(1);
+  
   display.setCursor(0, 0);
   display.print("Test 1 right");
   display.setCursor(0, 15);
@@ -291,13 +364,21 @@ void Display_init()
   display.clearDisplay();
   
   display.setCursor(0, 0);
-  display.print("Test 2 left");
+  display.print("Test 2 center");
   display.setCursor(0, 15);
   display.print("Range 18pF - 470uF");
   display.display();
   delay(1500);
   display.clearDisplay();
+
+  display.setCursor(0, 0);
+  display.print("Test 3 Left");
+  display.setCursor(0, 15);
+  display.print("Range 4.7nF - 180uF");
+  display.display();
+  delay(1500);
   
+  display.clearDisplay();
   display.setTextSize(2);
   display.setCursor(0, 0);
   display.print("Ready");

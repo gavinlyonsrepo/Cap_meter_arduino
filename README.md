@@ -2,7 +2,8 @@
 --------------------
 * Name : Cap_meter_arduino
 * Title : Capacitance meter Arduino based microcontroller.
-* Description : Capacitance meter for Arduino, two tests , range 18pf to 4F , Push Button input , OLED and serial monitor output.
+* Description : Capacitance meter for Arduino, three tests , 
+range 18pf to 4F , Push Button input , OLED and serial monitor output.
 * Author: Gavin Lyons
 * URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
 
@@ -30,24 +31,26 @@ Eagle schematic diagram and image in "docs".
 
 You will need following parts
 
-> Two pushbuttons
+> Three pushbuttons
 >
-> Two resistors 10Kohm and 220ohm 
+> Resistors Test2(10Kohm and 220ohm) , Test3(10K, 3.1K 1.8K)
 >
-> Arduino microcontroller (tested on a NANO and UNO)
+> Arduino micro-controller (tested on a NANO and UNO)
 >
 > I2C 0.91" inch 128x32 OLED Display Module (optional can also read data via serial monitor on PC)
 >
-> Some sort of terminals or socket to hold capacitors during test
+> Some sort of terminals or socket to hold or connect to capacitors during test
 >
 
 Features
 -----------------------------------------------
+
 The meter measures capacitance it outputs to an OLED and serial monitor.
-Two push buttons start the two tests.
+Three push buttons start the three tests respectively.
 
 1. Test 1 Range  1 uF to 4F.
 2. Test 2 Range 18 pF to 470 uF.
+3. Test 3 Range 0.0047 uF to 180 uF.
 
 Each Arduino capacitance meter relies on a property of resistor capacitor (RC) circuits- the time constant. 
 The time constant of an RC circuit is defined as the time it takes for the voltage across the capacitor 
@@ -66,8 +69,9 @@ Since the resistance value is already known,
 we can use the formula above in a program that will calculate the unknown capacitance.
 
 Test 1
-###
-Range  1 uF to 4F. 
+#######
+
+Test 1: Range  1 uF to 4F. 
 Uses two digital pins, one analog pin, and two resistors.
 One for discharge one for charge
 Insert a capacitor in range into terminal press button and view result on OLED or serial monitor
@@ -75,8 +79,9 @@ The result gives two values value of cap in uF and time constant to test in mS.
 
 ![ScreenShot cap sch](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/sch.jpg)
 
-Test2
-###
+Test 2
+###############
+
 Test 2 : Range 18 pF to 470 uF.
 This capacitance test has the greatest range of two. It also had the highest accuracy with smaller capacitors. 
 No resistors are needed and it only uses two analog pins(A2(neg) and A3(positive) from the Arduino.
@@ -101,6 +106,20 @@ The test displays 3 values
 
 ![ScreenShot cap sch 2](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test2sch.jpg)
 
+Test 3 
+#############
+
+Test 3 Range 0.0047 uF to 180 uF.
+
+![ScreenShot cap sch 3](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test3sch.jpg)
+
+A voltage divider is created to give a reference voltage
+Vout = Vin * (R2 / (R1 + R2)) , 5 * (3100 / (1800 + 3100)) = 3.163.
+The objective here is to find the time constant τ (tau) in the equation:
+τ = R * C Solved for C: C = τ / R
+So we want to charge the capacitor under test with a suitable voltage (eg. 5V from an Arduino output pin) and measure how long it takes to reach 63.2% of that voltage. So we need a reference voltage of 5 * 0.632, namely 3.16V.
+The internal analogue comparator is just the thing for the job. We connect the reference voltage to the AIN1 pin (negative reference) and connect our capacitor to the AIN0 pin (positive reference) and then configure an interrupt on the rising edge. A value of 10K for the resistor to give a reasonably slow charge time.
+
 
 Project Schematic 
 ----------------------------
@@ -114,6 +133,7 @@ See Also
 * http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
 * http://electronoobs.com/eng_arduino_tut10_1.php
 * http://wordpress.codewrite.co.uk/pic/2014/01/21/cap-meter-with-arduino-uno/
+* http://www.gammon.com.au/forum/?id=12075
 
 Copyright
 -------------------------------
