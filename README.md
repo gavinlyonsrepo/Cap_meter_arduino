@@ -1,4 +1,4 @@
-﻿Overview
+Overview
 --------------------
 * Name : Cap_meter_arduino
 * Title : Capacitance meter Arduino based microcontroller.
@@ -15,7 +15,6 @@ The .ino file( which contains the C++ source code) calls from a number of librar
 All are standard libraries which can be found on Arduino website site or Adafruit website
 
 * <Wire.h>   v 1.0.0 //I2C 
-* <Adafruit_GFX.h> v 1.2.2 // OLED 
 * <Adafruit_SSD1306.h> v 1.1.2 // OLED
 * <Button.h> v 1.0.0 // pb https://www.arduinolibraries.info/authors/madleech or https://github.com/madleech/Button
 
@@ -68,19 +67,18 @@ The Arduino will measure the voltage at the capacitor and record the time it tak
 Since the resistance value is already known, 
 we can use the formula above in a program that will calculate the unknown capacitance.
 
-Test 1
-#######
+**Test 1**
+
 
 Test 1: Range  1 uF to 4F. 
 Uses two digital pins, one analog pin, and two resistors.
 One for discharge one for charge
 Insert a capacitor in range into terminal press button and view result on OLED or serial monitor
-The result gives two values value of cap in uF and time constant to test in mS.
+The result gives two values: value of cap in uF and time constant to test in mS.
 
 ![ScreenShot cap sch](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/sch.jpg)
 
-Test 2
-###############
+**Test 2**
 
 Test 2 : Range 18 pF to 470 uF.
 This capacitance test has the greatest range of two. It also had the highest accuracy with smaller capacitors. 
@@ -106,8 +104,8 @@ The test displays 3 values
 
 ![ScreenShot cap sch 2](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test2sch.jpg)
 
-Test 3 
-#############
+**Test 3** 
+
 
 Test 3 Range 0.0047 uF to 180 uF.
 
