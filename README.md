@@ -36,7 +36,7 @@ You will need following parts
 >
 > Arduino micro-controller (tested on a NANO and UNO)
 >
-> I2C 0.91" inch 128x32 OLED Display Module (optional can also read data via serial monitor on PC)
+> I2C 0.91" inch 128x32 OLED Display Module SSD1306 Driver IC
 >
 > Some sort of terminals or socket to hold or connect to capacitors during test
 >
@@ -45,6 +45,7 @@ Features
 -----------------------------------------------
 
 The meter measures capacitance it outputs to an OLED and serial monitor.
+(The OLED is optional as data via serial monitor on a PC)
 Three push buttons start the three tests respectively.
 
 1. Test 1 Range  1 uF to 4F.
@@ -111,13 +112,15 @@ Test 3 Range 0.0047 uF to 180 uF.
 
 ![ScreenShot cap sch 3](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test3sch.jpg)
 
-A voltage divider is created to give a reference voltage
-Vout = Vin * (R2 / (R1 + R2)) , 5 * (3100 / (1800 + 3100)) = 3.163.
+A voltage divider is created to give a reference voltage,
+Vout = Vin * (R5 / (R5 + R4)) , 5 * (3100 / (1800 + 3100)) = 3.163.
 The objective here is to find the time constant τ (tau) in the equation:
 τ = R * C Solved for C: C = τ / R
 So we want to charge the capacitor under test with a suitable voltage (eg. 5V from an Arduino output pin) and measure how long it takes to reach 63.2% of that voltage. So we need a reference voltage of 5 * 0.632, namely 3.16V.
-The internal analogue comparator is just the thing for the job. We connect the reference voltage to the AIN1 pin (negative reference) and connect our capacitor to the AIN0 pin (positive reference) and then configure an interrupt on the rising edge. A value of 10K for the resistor to give a reasonably slow charge time.
+The internal analogue comparator is just the thing for the job. We connect the reference voltage to the AIN1 pin (negative reference) and connect our capacitor to the AIN0 pin (positive reference) and then configure an interrupt on the rising edge. A value of 10K for the resistor to give a reasonably slow charge time. The value of 10K is specified in code
+so adjust for your resistor I have 9830 ohms, and make sure to pick accurate resistors for voltage divider.
 
+The test returns the Capacitance in nF and time constant.
 
 Project Schematic 
 ----------------------------

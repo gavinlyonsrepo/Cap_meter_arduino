@@ -38,7 +38,7 @@ const int MAX_ADC_VALUE = 1023;
 
 //Pins and vars for test 3
 const byte pulsePin = 2;
-const unsigned long resistance = 10000;
+const unsigned long resistance = 9830; // (10K in theory)
 volatile boolean triggered;
 volatile boolean active;
 volatile unsigned long startTime;
@@ -96,17 +96,17 @@ void setup() {
 
 //******************* MAIN LOOP *****************
 void loop() {
-  // *** TEST 1 Range 1 uF to 4F. ***
+  // *** TEST 1 Range 1 uF to 4F. Left***
   if (btn_test.pressed()) {
     TestButton(1);
     Test_one();
   }
-  // *** TEST 2  Range 18 pF to 470 uF. ***
+  // *** TEST 2  Range 18 pF to 470 uF. center ***
   if (btn_test_two.pressed()) {
     TestButton(2);
     Test_two();
   }
-   // *** Test 3 Range 0.0047 uF to 180 uF. ***
+   // *** Test 3 Range 0.0047 uF to 180 uF. right ***
   if (btn_test_three.pressed()) {
     TestButton(3);
     Test_three();
@@ -138,14 +138,14 @@ void Test_one()
     Serial.print((long)uF);
     Serial.println(" microFarads");
     display.print((long)uF);
-    display.println(" uF");
+    display.print(" uF");
   }
   else {
     nF = uF * 1000.0;
     Serial.print((long)nF);
     Serial.println(" nanoFarads");
     display.print((long)nF);
-    display.println(" nF");
+    display.print(" nF");
     delay(500);
   }
   // Display results OLED
@@ -158,7 +158,8 @@ void Test_one()
   while (analogRead(analogPin) > 0) {
   }
   pinMode(dischargePin, INPUT);
-
+  delay(4000);
+  OLEDready();
 }
 
 //Function to carry out Test2
@@ -238,13 +239,18 @@ void Test_two()
     Serial.print(F(" us, ADC= "));
     Serial.print(val);
     Serial.println(F(")"));
-    display.setCursor(0, 15);
+    display.setCursor(0, 12);
+    display.print("t = ");
     display.print(t);
-    display.print(" ");
-    display.print(val);
+    display.print(" uS");
+    display.setCursor(0, 22);
+    display.print("ADC = ");
+    display.print(val);   
   }
   while (millis() % 1000 != 0);
   display.display();
+  delay(4000);
+  OLEDready();
 }
 
 //Function to carry out Test3
@@ -268,12 +274,24 @@ void Test_three(void)
       Serial.print ("Capacitance = ");
       Serial.print (duration * 1000 / resistance);
       Serial.println (" nF");
+      Serial.print ("duration = ");
+      Serial.println(duration);
+      Serial.println (" uS");
       triggered = false;
       //OLED
+      display.clearDisplay();
+      display.setCursor(0, 10);
+      display.setTextSize(1);
       display.print((duration * 1000 / resistance));
-      display.println(" nF");
+      display.print(" nF");
+      display.setCursor(0, 25);
+      display.print("t = ");
+      display.print(duration);
+      display.print(" uS");
+      
       display.display();
-      delay (3000);
+      delay (4000);
+      OLEDready();
       exitloop = true; //exit when test finished. 
       }
   }
@@ -288,11 +306,16 @@ void TestButton(int which_button)
   Serial.print("Buttonpressed: ");
   Serial.println(which_button);
   Serial.println ("Testing");
+  
   display.clearDisplay();
-  display.setCursor(7, 10);
-  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.print("TESTING...");
+  display.print("Testing: ");
+  display.print(which_button);
+  display.setCursor(0, 15);
+  display.print("Count: ");
+  display.print(test_count);
   display.display();
 }
 
@@ -301,10 +324,12 @@ void Display_time(unsigned long elaspedTime)
 {
   Serial.print(elaspedTime);
   Serial.print(" mS    ");
+  
   display.clearDisplay();
-  display.setCursor(0, 0);
+  display.setCursor(0, 25);
   display.print(elaspedTime);
-  display.println(" mS");
+  display.print(" mS");
+  display.setCursor(0, 5);
 }
 
 // Function to display init screen in setup
@@ -318,7 +343,7 @@ void Display_init()
   display.setTextColor(WHITE);
   display.print("Cap Meter");
   display.setCursor(0, 15);
-  display.print("G. Lyons");
+  display.print("Ver 2.1");
   display.display();
   delay(1500); 
   display.clearDisplay();
@@ -348,12 +373,19 @@ void Display_init()
   display.display();
   delay(1500);
   
+  OLEDready();
+  
+}
+
+//Function to display ready message
+void OLEDready()
+{
   display.clearDisplay();
   display.setTextSize(2);
   display.setCursor(0, 0);
   display.print("Ready");
   display.display();
-  
 }
+
 //******************* EOF *****************
 
