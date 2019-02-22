@@ -12,5 +12,3 @@
 * Version  2.1-2 Feb  2019
 	1. Improved and Optimized various displays and test results on the OLED screen.
 	2. Removed Adafruit OLED graphic library declaration and defines from code, was never used since testing.
-	
-	
