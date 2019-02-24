@@ -91,9 +91,9 @@ The user can adjust the 10K resistor value in code variable(resistorValue) to ma
 
 Test 2 : Range 18 pF to 470 uF.
 
-This capacitance test has the greatest range of two. It also had the highest accuracy with smaller capacitors. 
+This capacitance test has the greatest range of 3. It also had the highest accuracy with smaller capacitors. 
 No resistors are needed and it only uses two analog pins(A2(neg) and A3(positive) from the Arduino.
-There is no extra resistor just the internal components of atmega chip.
+There is no extra resistor just the internal components of ATmega328 chip.
 
 C1 calibration(optional): 
 

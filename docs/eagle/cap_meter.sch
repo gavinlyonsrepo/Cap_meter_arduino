@@ -2331,9 +2331,9 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="78.74" y1="35.56" x2="78.74" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="55.88" x2="76.2" y2="55.88" width="0.1524" layer="91"/>
 <junction x="78.74" y="35.56"/>
-<wire x1="76.2" y1="55.88" x2="76.2" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="U$1" gate="G$1" pin="A7"/>
-<wire x1="76.2" y1="68.58" x2="78.74" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="55.88" x2="76.2" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="A6"/>
+<wire x1="78.74" y1="71.12" x2="76.2" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$7" class="0">
