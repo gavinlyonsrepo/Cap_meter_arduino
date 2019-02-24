@@ -24,21 +24,20 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define analogPin      6
 #define chargePin      12
 #define dischargePin   11
-#define resistorValue  10000.0F
+#define resistorValue  9988.0F // 10K in theory User adjust
 
 
 // Pins and vars for test 2
-const int OUT_PIN = A3;  // pos pin
-const int IN_PIN = A2;
-const float IN_STRAY_CAP_TO_GND = 24.48;
-const float IN_CAP_TO_GND  = IN_STRAY_CAP_TO_GND;
-const float R_PULLUP = 34.8;
-const int MAX_ADC_VALUE = 1023;
+const int OutPin = A3; 
+const int InPin = A2;
+const float CapOne = 24.48; //user calibrate
+const float Res_Pullup = 34.8;
+const int MaxADC_Value = 1023;
 
 
 //Pins and vars for test 3
 const byte pulsePin = 2;
-const unsigned long resistance = 9830; // (10K in theory)
+const unsigned long resistance = 9830; // (10K in theory) user adjust
 volatile boolean triggered;
 volatile boolean active;
 volatile unsigned long startTime;
@@ -65,6 +64,12 @@ int test_count = 0;
 //*************************** SETUP ************************
 void setup() {
 
+   // Status LED
+   pinMode(LED_BUILTIN, OUTPUT);
+   digitalWrite(LED_BUILTIN, HIGH);  
+   delay(80);                    
+   digitalWrite(LED_BUILTIN, LOW);
+   
   // Setup pins for button enable internal pull-up resistors
   digitalWrite(3, HIGH);
   digitalWrite(8, HIGH);
@@ -73,15 +78,22 @@ void setup() {
   btn_test_two.begin();
   btn_test_three.begin();
 
-  // Setup pins for testing 1 and 2
+  // Setup pins for test 1
   pinMode(chargePin, OUTPUT);
-  pinMode(OUT_PIN, OUTPUT);
-  pinMode(IN_PIN, OUTPUT);
   digitalWrite(chargePin, LOW);
-  //test3
+   
+  // Setup pins for test 2
+  pinMode(OutPin, OUTPUT);
+  pinMode(InPin, OUTPUT);
+  
+  // setup for test3
   pinMode(pulsePin, OUTPUT);
   digitalWrite(pulsePin, LOW);
-  ADCSRB = 0;
+  // Set up Analog Comparator
+  ADCSRB = 0; // clear ADCSRB registers
+  // Analog Comparator Interrupt Flag: Clear Pending Interrupt 
+  // Analog Comparator Interrupt: Enabled 
+  // Analog Comparator Interrupt Mode: interrupt on the rising edge
   ACSR =  _BV (ACI)
           | _BV (ACIE)
           | _BV (ACIS0) | _BV (ACIS1);
@@ -91,7 +103,6 @@ void setup() {
   //display intial OLED screen
   Display_init();
   Serial.println("------------- CAP Meter Comms UP ------------");
-  delay(500);
 }
 
 //******************* MAIN LOOP *****************
@@ -112,7 +123,6 @@ void loop() {
     Test_three();
   }
 }
-
 
 // ********************* FUNCTIONS *************************
 
@@ -168,16 +178,16 @@ void Test_two()
   display.clearDisplay();
   display.setCursor(0, 0);
 
-  pinMode(IN_PIN, INPUT);
-  digitalWrite(OUT_PIN, HIGH);
-  int val = analogRead(IN_PIN);
-  digitalWrite(OUT_PIN, LOW);
+  pinMode(InPin, INPUT);
+  digitalWrite(OutPin, HIGH);
+  int val = analogRead(InPin);
+  digitalWrite(OutPin, LOW);
 
   if (val < 1000)
   {
-    pinMode(IN_PIN, OUTPUT);
+    pinMode(InPin, OUTPUT);
     // Cu = VA2 * C1 / (VA3 - VA2)
-    float capacitance = (float)val * IN_CAP_TO_GND / (float)(MAX_ADC_VALUE - val);
+    float capacitance = (float)val * CapOne / (float)(MaxADC_Value - val);
     Serial.print(F("Capacitance Value = "));
     Serial.print(capacitance, 3);
     Serial.print(F(" pF ("));
@@ -188,33 +198,33 @@ void Test_two()
   }
   else
   {
-    pinMode(IN_PIN, OUTPUT);
+    pinMode(InPin, OUTPUT);
     delay(1);
-    pinMode(OUT_PIN, INPUT_PULLUP);
+    pinMode(OutPin, INPUT_PULLUP);
     unsigned long u1 = micros();
     unsigned long t;
     int digVal;
     do
     {
-      digVal = digitalRead(OUT_PIN);
+      digVal = digitalRead(OutPin);
       unsigned long u2 = micros();
       // condition ? result_if_true : result_if_false
       t = u2 > u1 ? u2 - u1 : u1 - u2;
     } while ((digVal < 1) && (t < 400000L));
 
-    pinMode(OUT_PIN, INPUT);
-    val = analogRead(OUT_PIN);
+    pinMode(OutPin, INPUT);
+    val = analogRead(OutPin);
 
     //discharge
-    digitalWrite(IN_PIN, HIGH);
+    digitalWrite(InPin, HIGH);
     int dischargeTime = (int)(t / 1000L) * 5;
     delay(dischargeTime);
-    pinMode(OUT_PIN, OUTPUT);
-    digitalWrite(OUT_PIN, LOW);
-    digitalWrite(IN_PIN, LOW);
+    pinMode(OutPin, OUTPUT);
+    digitalWrite(OutPin, LOW);
+    digitalWrite(InPin, LOW);
 
-    float capacitance = -(float)t / R_PULLUP
-                        / log(1.0 - (float)val / (float)MAX_ADC_VALUE);
+    float capacitance = -(float)t / Res_Pullup
+                        / log(1.0 - (float)val / (float)MaxADC_Value);
     Serial.print(F("Capacitance Value = "));
     if (capacitance > 1000.0)
     {
@@ -297,10 +307,12 @@ void Test_three(void)
   }
 }
 
-// Function to handle button press start display to OLED and serial Mon
+// Function to handle button press start display to OLED and serial monitor
 void TestButton(int which_button)
 {
+  digitalWrite(LED_BUILTIN, LOW);
   test_count ++;
+  
   Serial.print("testcount: ");
   Serial.println(test_count);
   Serial.print("Buttonpressed: ");
@@ -359,7 +371,7 @@ void Display_init()
   display.clearDisplay();
   
   display.setCursor(0, 0);
-  display.print("Test 2 center");
+  display.print("Test 2 left");
   display.setCursor(0, 15);
   display.print("Range 18pF - 470uF");
   display.display();
@@ -367,7 +379,7 @@ void Display_init()
   display.clearDisplay();
 
   display.setCursor(0, 0);
-  display.print("Test 3 Left");
+  display.print("Test 3 top");
   display.setCursor(0, 15);
   display.print("Range 4.7nF - 180uF");
   display.display();
@@ -377,14 +389,15 @@ void Display_init()
   
 }
 
-//Function to display ready message
+//Function to display ready message and Status LED
 void OLEDready()
-{
+{ 
   display.clearDisplay();
   display.setTextSize(2);
   display.setCursor(0, 0);
   display.print("Ready");
   display.display();
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
 //******************* EOF *****************
