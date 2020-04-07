@@ -5,7 +5,7 @@ Table of contents
   * [Overview](#overview)
   * [Libraries](#libraries)
   * [Software used](#software-used)
-  * [Parts Parts](#parts-lits)
+  * [Parts list](#parts-list)
   * [Features](#features)
   * [Project Schematic](#project-schematic)
   * [See  Also](#see-also)
@@ -25,9 +25,8 @@ Libraries
 
 The .ino file( which contains the C++ source code) calls from a number of libraries.
 
-All are standard libraries which can be found on Arduino website site or Adafruit website
-
-* <Wire.h>   v 1.0.0 //I2C 
+All are standard libraries which can be found on Arduino libray manager.
+ 
 * <Adafruit_SSD1306.h> v 1.1.2 // OLED
 * <Button.h> v 1.0.0 // pb https://www.arduinolibraries.info/authors/madleech or https://github.com/madleech/Button
 
@@ -45,13 +44,13 @@ You will need following parts
 
 > Three pushbuttons
 >
-> Resistors: Test2(10Kohm and 220ohm) , Test3(10K, 3.1K, 1.8K)
+> Resistors: Test2( 10K and 220ohm) , Test3(10K, 3.1K, 1.8K)
 >
 > Arduino NANO micro-controller module (tested on a NANO and UNO)
 >
 > I2C 0.91" inch 128x32 OLED Display Module SSD1306 Driver IC
 >
-> Some sort of terminals or socket to hold or connect to capacitors during test
+> Terminals to hold or connect to capacitors during test
 >
 
 Features
