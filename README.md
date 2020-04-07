@@ -1,3 +1,15 @@
+Table of contents
+---------------------------
+
+  * [Table of contents](#table-of-contents)
+  * [Overview](#overview)
+  * [Libraries](#libraries)
+  * [Software used](#software-used)
+  * [Parts Parts](#parts-lits)
+  * [Features](#features)
+  * [Project Schematic](#project-schematic)
+  * [See  Also](#see-also)
+  
 Overview
 --------------------
 * Name : Cap_meter_arduino
@@ -6,6 +18,7 @@ Overview
 range 18pf to 4F , Push Button input , OLED, serial monitor output and LED(onboard NANO)
 * Author: Gavin Lyons
 * URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
+* License: Copyright (C) 2018 G Lyons. See license.md for more details.
 
 Libraries
 ------------------------
@@ -159,8 +172,3 @@ See Also
 * http://electronoobs.com/eng_arduino_tut10_1.php
 * http://wordpress.codewrite.co.uk/pic/2014/01/21/cap-meter-with-arduino-uno/
 * http://www.gammon.com.au/forum/?id=12075
-
-Copyright
--------------------------------
-
-Copyright (C) 2018 G Lyons. This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, see license.md for more details
