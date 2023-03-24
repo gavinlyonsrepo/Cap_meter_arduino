@@ -1,3 +1,5 @@
+[![Website](https://img.shields.io/badge/Website-Link-blue.svg)](https://gavinlyonsrepo.github.io/)  [![Rss](https://img.shields.io/badge/Subscribe-RSS-yellow.svg)](https://gavinlyonsrepo.github.io//feed.xml)  [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/whitelight976)
+
 Table of contents
 ---------------------------
 
@@ -17,8 +19,6 @@ Overview
 * Description : Capacitance meter for Arduino, three tests , 
 range 18pf to 4F , Push Button input , OLED, serial monitor output and LED(onboard NANO)
 * Author: Gavin Lyons
-* URL: https://github.com/gavinlyonsrepo/Cap_meter_arduino
-* License: Copyright (C) 2018 G Lyons. See license.md for more details.
 
 Libraries
 ------------------------
