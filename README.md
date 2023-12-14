@@ -1,27 +1,27 @@
 [![Website](https://img.shields.io/badge/Website-Link-blue.svg)](https://gavinlyonsrepo.github.io/)  [![Rss](https://img.shields.io/badge/Subscribe-RSS-yellow.svg)](https://gavinlyonsrepo.github.io//feed.xml)  [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/whitelight976)
 
-Table of contents
----------------------------
+# Table of contents
 
   * [Table of contents](#table-of-contents)
   * [Overview](#overview)
   * [Libraries](#libraries)
-  * [Software used](#software-used)
   * [Parts list](#parts-list)
-  * [Features](#features)
+  * [Software](#software)
+		1. [Test1](#test1)
+		2. [Test2](#test2)
+		3. [Test3](#test3)
   * [Project Schematic](#project-schematic)
   * [See  Also](#see-also)
   
-Overview
---------------------
+## Overview
+
 * Name : Cap_meter_arduino
 * Title : Capacitance meter Arduino based microcontroller.
 * Description : Capacitance meter for Arduino, three tests , 
 range 18pf to 4F , Push Button input , OLED, serial monitor output and LED(onboard NANO)
 * Author: Gavin Lyons
 
-Libraries
-------------------------
+## Libraries
 
 The .ino file( which contains the C++ source code) calls from a number of libraries.
 
@@ -30,14 +30,8 @@ All are standard libraries which can be found on Arduino libray manager.
 * <Adafruit_SSD1306.h> v 1.1.2 // OLED
 * <Button.h> v 1.0.0 // pb https://www.arduinolibraries.info/authors/madleech or https://github.com/madleech/Button
 
-Software used
------------------------------
-Eagle 9.1.3
+## Parts List
 
-Arduino 1.8.5
-
-Parts List
-------------------------------
 Eagle schematic diagram and image in "docs". 
 
 You will need following parts
@@ -53,8 +47,7 @@ You will need following parts
 > Terminals to hold or connect to capacitors during test
 >
 
-Features
------------------------------------------------
+## Software
 
 The meter measures capacitance it outputs to an OLED and serial monitor.
 (The OLED is optional as data via serial monitor on a PC)
@@ -85,8 +78,7 @@ The Arduino will measure the voltage at the capacitor and record the time it tak
 Since the resistance value is already known, 
 we can use the formula above in a program that will calculate the unknown capacitance.
 
-**Test 1**
-
+### Test 1
 
 Test 1: Range  1 uF to 4F. 
 Uses two digital pins, one analog pin, and two resistors.
@@ -99,7 +91,7 @@ The user can adjust the 10K resistor value in code variable(resistorValue) to ma
 
 ![ScreenShot cap sch](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/sch.jpg)
 
-**Test 2**
+### Test 2
 
 Test 2 : Range 18 pF to 470 uF.
 
@@ -132,7 +124,7 @@ The test displays 3 values
 
 ![ScreenShot cap sch 2](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/images/test2sch.jpg)
 
-**Test 3** 
+### Test 3
 
 
 Test 3 Range 0.0047 uF to 180 uF.
@@ -158,13 +150,11 @@ so adjust for your resistor value , I have 9830 ohms. Make sure to pick accurate
 
 The test returns the Capacitance result and time constant.
 
-Project Schematic 
-----------------------------
+## Project Schematic 
 
 ![ScreenShot cap sch 3](https://github.com/gavinlyonsrepo/Cap_meter_arduino/blob/master/docs/eagle/cap_meter.png)
 
-See Also
------------------------------------
+## See Also
  
 * https://www.arduino.cc/en/Tutorial/CapacitanceMeter
 * http://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/
