@@ -7,9 +7,9 @@
   * [Libraries](#libraries)
   * [Parts list](#parts-list)
   * [Software](#software)
-		* [Test1](#test1)
-		* [Test2](#test2)
-		* [Test3](#test3)
+	* [Test 1](#test-1)
+	* [Test 2](#test-2)
+	* [Test 3](#test-3)
   * [Project Schematic](#project-schematic)
   * [See  Also](#see-also)
   
